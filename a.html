@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>charCode example</title>
+
+<script type="text/javascript">
+
+function showChar(e)
+{
+alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
+      + "charCode: " + e.charCode);
+}
+ document.querySelector("body").addEventListener("", function(){
+
+ })
+
+</script>
+</head>
+
+<body onkeypress="showChar(event);">
+<p>Press any 'character' type key.</p>
+</body>
+</html>

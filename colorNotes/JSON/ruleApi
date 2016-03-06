@@ -1,0 +1,21 @@
+[
+	{
+		"ID":1,
+		"rulename" : "Must be 5 characters",
+        "type":"sex",
+        "src": "http://www.womenshealthmag.com/sites/womenshealthmag.com/files/images/cuddle-after-sex_0.jpg"
+		},
+    {
+    	"ID":2,
+    	"rulename" : "Must not be used elsewhere",
+        "type":"green",
+        "src": "https://artdoxa-images.s3.amazonaws.com/uploads/artwork/image/123468/watermark_Your_Natural_Beauty_wallpaper.jpg"
+    	},
+
+    {
+    	"ID":3,
+    	"rulename" : "Must be cool",
+        "type":"forest",
+        "src": "http://www.whitegadget.com/attachments/pc-wallpapers/107359d1338614028-natural-beauty-wallpaper-natural-beauty-images.jpg"
+    }
+]

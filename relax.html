@@ -1,0 +1,57 @@
+<?php
+session_start();
+if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
+    header("Location:index.php");
+}
+?>
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Relax</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,300italic,400italic,600italic,700,700italic,800italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <script src="js/zim_1.4.4.js"></script>
+    <script src="js/createjs-2015.05.21.min.js"></script>
+    <script src="js/relaxCanvas.js"></script>
+
+</head>
+
+<?php
+// use php to get current time
+//  date("U");
+
+// check database for existing record:
+// [ usrid: 1, page:copy, time:9:15a ]
+
+// calculate difference
+// - 30 minutes spent on copy page
+// - add 30 minutes to db
+
+// store in the database:
+// - current time
+// - current page (relax)
+// [ usrid: 1, page:relax, time:9:44a ]
+
+// construct table:
+// [ uid, page, timespent ]
+?>
+    
+<body>
+
+    <div class="header">
+        <nav></nav>
+        <a href="dashboard.php"><img src="img/logo-01.svg"></a>
+
+        <img src="img/profile-01.svg">
+        <img src="img/hamburger-01.svg">
+
+    </div>
+    <canvas id="relaxCanvas"></canvas>
+</body>
+
+
+</html>
