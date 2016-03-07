@@ -61,11 +61,25 @@ function addColor() {
 
     })
     colorAddBtn.addEventListener("click", function (ev) {
-        
+        ev.preventDefault();
+        var codevalue = document.querySelector("#colorCode").value;
         coloraddForm.style.display = "none";
-        // coloraddForm.submit();
-        // ev.preventDefault();
-
+        
+        var xhr = new XMLHttpRequest();
+        var data = 'color='+codevalue;
+        xhr.open("POST", "addColor.php");
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(data);
+        xhr.onreadystatechange = function() {
+            // if everything worked out, then..
+            if( xhr.readyState == 4 && xhr.status == 200 ) {
+                var colorDiv = document.querySelectorAll(".dragable");
+                for (var i = 0; i < colorDiv.length; i++) {
+                    colorDiv[i].remove();
+                };
+                loadColor();
+            }
+        }
     })
 }
 
@@ -280,11 +294,226 @@ function redirect(){
     setInterval(set, 100);
 }
 
+function loadColor(){
+    var color;
+    var xhr = new XMLHttpRequest();
+    xhr.open( 'GET', 'readcolor.php' );
+    xhr.send();
+
+    // set up a event listner to check for status changes
+    xhr.onreadystatechange = function() {
+        // if everything worked out, then..
+        if( xhr.readyState == 4
+            && xhr.status == 200 ) {
+
+            // process the response
+          (function(){
+            var colors = JSON.parse(xhr.responseText).data
+        
+            for(var prop in colors){
+                color = colors[prop].ColorCode;
+                console.log(color);
+                var el = document.createElement("div");
+                el.setAttribute("class", "dragable");
+                el.setAttribute("draggable", "true");
+                el.setAttribute("style", "background:"+color);
+                el.setAttribute("data-id", color);
+                el.style.background = color;
+                el.style.position = "relative";
+                el.innerHTML = "<section style='color:gray; background:white;text-align:center; opacity:0.4'>"+color+"</section>"
+                var x = document.createElement("div");
+                x.style.width = "20px";
+                x.style.height = "20px";
+                x.style.background = "snow";
+                x.style.transition = "all 1s ease";
+                x.style.opacity = 0.5;
+                x.textContent = "X"
+                x.style.position ="absolute";
+                x.style.textAlign ="center";
+                x.style.bottom ="0";
+                x.style.cursor ="pointer";
+                x.style.right ="0";
+                x.addEventListener("click",delcolor)
+                el.appendChild(x);
+                document.querySelector(".colorSection").appendChild(el);
+            }
+          })();
+
+        }
+    }
+
+}
 
 
-//run after load
+/*pravit function*/
+function delcolor(){
+          var that = this;
+          console.log(this.parentElement.getAttribute("data-id"));
+          var data = 'id='+this.parentElement.getAttribute("data-id");
+          var xhr = new XMLHttpRequest();
+          xhr.open( 'POST', 'deleteColor.php' );
+          xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+          xhr.send( data );
+          xhr.onreadystatechange = function() {
+            // if everything worked out, then..
+            if( xhr.readyState == 4
+                && xhr.status == 200 ) {
+                var status =  JSON.parse(xhr.responseText).message ;
+                if(status == "success"){
+                    that.parentElement.remove();
+                }
+            }
+          }
+}
+
+function loadFont(){
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open( 'GET', 'readFont.php' );
+        xhr.send();
+
+        // set up a event listner to check for status changes
+        xhr.onreadystatechange = function() {
+            // if everything worked out, then..
+            if( xhr.readyState == 4
+                && xhr.status == 200 ) {
+                var data = JSON.parse(xhr.responseText).data;
+                // process the response
+                console.log(data);
+                var nos = document.querySelectorAll(".fontnoootes");
+                for (var i = 0; i < nos.length; i++) {
+                    nos[i].remove();
+                };
+                for (var i = 0; i < data.length; i++) {
+                    var FontName = data[i].FontName;
+                    var Notes = data[i].Notes;
+                    var WebAddress = data[i].WebAddress;
+                    // console.log("FontName: ",FontName); 
+                    // console.log("Notes: ",Notes); 
+                    // console.log("WebAddress: ",WebAddress); 
+                    var el = document.createElement("div");
+                    el.setAttribute("class", "fontnoootes");
+                    el.setAttribute("data-FontName", FontName);
+                    el.style.marginLeft=0;
+                    el.style.position="relative";
+                    el.style.marginTop="10px";
+                    el.style.padding="10px";
+                    el.innerHTML = "<div><section style = 'margin-left:0'><h4>Font Name<h6>"+FontName+"</h6></h4></section><section><h4>Web address</h4><h6 class='fontWebAddressFroIframe'>"+WebAddress+"</h6></section><section><h4>Notes</h4><h6>"+Notes+"</h6></section></div>";
+                    var x = document.createElement("section");
+                    x.setAttribute("class", "fontX");
+                    x.textContent = "x";
+                    x.style.position = "absolute";
+                    x.style.textAlign = "center";
+                    x.style.width = "15px";
+                    x.style.height = "15px";
+                    x.style.lineHeight = "15px";
+                    x.style.border = "1px dotted black";
+                    x.style.top = "10px";
+                    x.style.right = "10px";
+                    x.style.opacity = "0.6";
+                    x.style.cursor = "pointer";
+                    el.appendChild(x);
+                    document.querySelector(".fontNoteSection").appendChild(el);
+                };
+
+            }
+        }
+        
+}
+function delFont(){
+
+    var fontXs = document.querySelectorAll(".fontX");
+    console.log(fontXs[0]);
+    for (var i = 0; i < fontXs.length; i++) {
+        fontXs[i].addEventListener("click", function(){
+            var that = this;
+            // var enquire = confirm("Are you sure?");
+            var enquire = true;
+            if(enquire == true){
+                var query = "id="+that.parentElement.getAttribute("data-FontName");
+                console.log(query);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "delFont.php");
+                xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+                xhr.send(query);
+                xhr.onreadystatechange = function() {
+                    if( xhr.readyState == 4 && xhr.status == 200 ) {
+                        console.log( JSON.parse(xhr.responseText));
+                    }
+                }
+                that.parentElement.remove();
+            }else{
+                return
+            }
+
+        })
+    };
+
+}
+function saveFont(){
+    var FontName = document.getElementById('FontName');
+    var WebAddress = document.getElementById('WebAddress');
+    var FontNotes = document.getElementById('FontNotes');
+    
+    var fontsubmit = document.getElementById("fontsubmit");
+    fontsubmit.addEventListener("click", function(e){
+        e.preventDefault();
+        FontNamev = FontName.value;
+        WebAddressv = WebAddress.value;
+        FontNotesv = FontNotes.value;   
+        // console.log(FontName);
+        // console.log(WebAddress);
+        // console.log(FontNotes);
+        var data = "FontName="+FontNamev;
+        data += "&WebAddress="+WebAddressv;
+        data += "&FontNotes="+FontNotesv;
+        var xhr = new XMLHttpRequest;
+        xhr.open("POST", "saveFont.php");
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status ==200){
+                console.log(JSON.parse( xhr.responseText ));
+                loadFont();
+                (function(){
+                    var log = document.createElement('div');
+                    log.style.width= "300px";
+                    log.style.height= "200px";
+                    log.style.position= "absolute";
+                    log.style.background= "rgba(81, 108, 151, 0.5)";
+                    log.style.border= "1px solid #ff6347";
+                    log.style.top= "0";
+                    log.style.bottom= "0";
+                    log.style.left= "0";
+                    log.style.right= "0";
+                    log.style.color= "#e4e1ce";
+                    log.style.opacity= "#e4e1ce";
+                    log.style.lineHeight= "200px";
+                    log.style.margin= "auto";
+                    log.style.textAlign= "center";
+                    log.style.boxShadow= "1px 1px 11px rbga(0,0,0,0.5)";
+                    log.style.animation= "showup 1s 1 ease";
+                    log.textContent = "Success";
+                    document.body.appendChild(log);
+                    document.addEventListener("click", function(e){
+                        log.remove();
+                    })
+
+
+                })()
+
+            }
+        }
+        FontName.value = '';
+        WebAddress.value = '';
+         FontNotes.value = '';
+    })
+
+}
 window.addEventListener("load", function () {
 
+    loadColor();
     toggleNotbook();
     addColor();
     drag();
@@ -296,8 +525,9 @@ window.addEventListener("load", function () {
     chooseArticle();
     typeFontNote();
     redirect();
-    loadColor();
-
+    loadFont();
+    saveFont();
+    setTimeout(delFont, 2000);
 
     // test if query string colorCode is set
     // location..indexOf("colorCode") > -1
@@ -310,7 +540,7 @@ window.addEventListener("load", function () {
     // check if colour was posted
 
     //    if( colourSaved ) {
-    console.log("COLOR:", window.colourSaved);
+    // console.log("COLOR:", window.colourSaved);
     //    }
 
 

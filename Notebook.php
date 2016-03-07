@@ -32,7 +32,7 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
     ?>
 
     <script src="js/notebook.js"></script>
-    <script src="js/colorbook.js"></script>
+    
 
 </head>
 
@@ -140,77 +140,12 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
                     <div>
                         <i id="addicon" class="fa fa-plus-square-o fa-4x"></i>
                         <form method="get" action="#" id="coloraddForm">
-                            <input type="text" name="colorCode" placeholder="type color code...">
+                            <input type="text" id="colorCode" name="colorCode" placeholder="type color code...">
                             
                             <input type="submit" id="colorAddBtn" value="ADD">
                         </form>
-                        <!--===============================================================================================-->
-                       <?php
-                         if(isset($_GET["colorCode"])){
-                                
-
-                               try{
-                                    $colorCode = $_GET["colorCode"];
-                                   
-                             require("config.php");
-
-                                
-                                $sql="INSERT INTO `ColorNotes` (`ColorCode`) VALUES (:colorCode)";
-                                   
-                                $stmt = $db->prepare($sql);
-                                   
-                                $stmt->bindParam(':colorCode', $colorCode);
-                                   
-                                $stmt->execute();
-                             
-                              
-                               // echo 'done';
-                               }catch(PDOException $e){
-                               
-                                   echo "Wrong!".$e->getMessage();
-                               }
-                               
-                            }
-                       ?>
-                            <!--===============================================================================================-->
+    
                     </div>
-                    <?php 
-                        try{
-                           
-                            require("config.php");
-                               
-                            $sql="SELECT `ColorCode` FROM `ColorNotes";
-                            
-                            $stmt=$db->query($sql);
-                            
-                            $stmt->execute();
-                        
-                            $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                            
-                            foreach($colors as $key=>$value){
-                            ?>
-                                <div class='dragable' draggable="true" style='background:<?php echo $colors[$key]['ColorCode'] ?>'></div>
-                               
-                        <?php        
-                        }
-                     
-                       }catch(PDOException $e){
-                       
-                       
-                        echo"worng2!".$e->getMessage();
-                       
-                       }
-                    
-                    ?>
-
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
                 </div>
 
                 <!--                fontNote-->
@@ -219,11 +154,11 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
                         <div>
                             <form method="get"  style = "margin-bottom:10px" action="Notebook.php">
                                 <label>Font Name:</label>
-                                <input name="FontName" type="text">
+                                <input id="FontName"  name="FontName" type="text">
                                 <label>Web address:</label>
-                                <input name="WebAddress" type="text">
+                                <input  id="WebAddress"name="WebAddress" type="text">
                                 <label>Notes:</label>
-                                <input name="FontNotes" type="text">
+                                <input id="FontNotes" name="FontNotes" type="text">
                                 <input type="submit"   id="fontsubmit">
                             </form>
                         </div>
@@ -232,48 +167,11 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
                         </div>
                     </div>
                     <!--===============================================================================================-->
-                    <?php
-                    
-                           
-                           
-                    
-                          try{
-                                $sql = "SELECT `FontName`, `WebAddress`, `Notes`FROM `FontNotes`";
-                                // create pdo conneciton
-                                // INSERT CODE HERE
-                                require("config.php");
-                                
-                                // prepare a statement for sanitization
-                                // INSERT CODE HERE
-                                $stmt = $db->query($sql);
-                                $Fontdata = $stmt->fetchAll( PDO::FETCH_ASSOC );
-//                                print_r($Fontdata[0]["FontName"]); 
-                                
-//                                foreach($Fontdata as $key =>$value){
-//                                
-//                                    echo $Fontdata[$key]["FontName"]."<br/>";
-//                                    
-//                                    echo $Fontdata[$key]["WebAddress"]."<br/>";
-//                                    echo $Fontdata[$key]["Notes"]."<br/>";
-//
-//                                
-//                                
-//                                }
-                                
-//                                echo "Done!"
-                                    ;}
-                            catch(PDOException $e)
-                            {
-                                echo "Error: " . $e->getMessage();
-                            }     
-                    
-                    
-                    
-                    ?>
+      
                         <!--===============================================================================================-->
 
-
-                        <div style = "margin-left:0;margin-top:10px; padding:10px;" class="fontnoootes">
+                            
+       <!--                  <div style = "margin-left:0;margin-top:10px; padding:10px;"class="fontnoootes">
                             <?php   foreach($Fontdata as $key =>$value){?>
                                 <div>
                                     <section style = "margin-left:0">
@@ -294,50 +192,50 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
                                 <?php }
                                 ?>
 
-                        </div>
+                            </div> -->
                 </div>
             </section>
         </div>
         <!--===============================================================================================-->
         <?php
            
-                        if(!empty($_GET['FontName'])||!empty($_GET['WebAddress'])||!empty($_GET['FontNotes'])){
+//                         if(!empty($_GET['FontName'])||!empty($_GET['WebAddress'])||!empty($_GET['FontNotes'])){
                         
-                         try{   
-                        $FontName = $_GET['FontName'];
-                        $WebAddress = $_GET['WebAddress'];
-                        $FontNotes = $_GET['FontNotes'];
+//                          try{   
+//                         $FontName = $_GET['FontName'];
+//                         $WebAddress = $_GET['WebAddress'];
+//                         $FontNotes = $_GET['FontNotes'];
                         
                         
                                                 
                            
-                       $sql = "INSERT INTO `FontNotes` (`FontName`,`WebAddress`,`Notes`) VALUES (:FontName, :WebAddress, :FontNotes )";
-                       // create pdo conneciton
-                       // INSERT CODE HERE
-                       require("config.php");
-//                       var_dump($db);
-                       // prepare a statement for sanitization
-                       // INSERT CODE HERE
-                       $stmt = $db->prepare($sql);
-                       // bind parameters to the statement
-                       // INSERT CODE HERE
-                       $stmt->bindParam(':FontName', $FontName);
-                       $stmt->bindParam(':WebAddress', $WebAddress);
-                       $stmt->bindParam(':FontNotes', $FontNotes);
+//                        $sql = "INSERT INTO `FontNotes` (`FontName`,`WebAddress`,`Notes`) VALUES (:FontName, :WebAddress, :FontNotes )";
+//                        // create pdo conneciton
+//                        // INSERT CODE HERE
+//                        require("config.php");
+// //                       var_dump($db);
+//                        // prepare a statement for sanitization
+//                        // INSERT CODE HERE
+//                        $stmt = $db->prepare($sql);
+//                        // bind parameters to the statement
+//                        // INSERT CODE HERE
+//                        $stmt->bindParam(':FontName', $FontName);
+//                        $stmt->bindParam(':WebAddress', $WebAddress);
+//                        $stmt->bindParam(':FontNotes', $FontNotes);
               
                        
-                       // execute the statement
-                       // INSERT CODE HERE
-                       $stmt->execute();
+//                        // execute the statement
+//                        // INSERT CODE HERE
+//                        $stmt->execute();
                        
-                       // done
-//                       echo "Done!"
-                           ;}catch(PDOException $e){
-                                echo "Error: " . $e->getMessage();
-                        }
+//                        // done
+// //                       echo "Done!"
+//                            ;}catch(PDOException $e){
+//                                 echo "Error: " . $e->getMessage();
+//                         }
                            
                            
-                        }   
+//                         }   
                     
 
 
