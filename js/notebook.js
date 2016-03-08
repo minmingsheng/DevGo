@@ -527,6 +527,7 @@ window.addEventListener("load", function () {
     redirect();
     loadFont();
     saveFont();
+    // delFont();
     setTimeout(delFont, 2000);
 
     // test if query string colorCode is set

@@ -994,6 +994,15 @@
     
     .overflow {
         overflow: hidden;
+        position: relative;
+        
+    }
+    .overflow button{
+        position: absolute;
+        margin-top: 300px;
+        z-index: 10000;
+        bottom:0;
+        right: 0;
     }
     
     .wireframe_canvas .downWireframe {

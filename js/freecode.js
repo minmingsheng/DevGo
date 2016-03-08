@@ -6,7 +6,17 @@ window.addEventListener("load", function () {
     var cssInput = document.getElementById("cssInput");
     var jsInput = document.getElementById("jsInput");
     var resultContainer = document.getElementById("resultContainer");
-
+    htmlInput.setAttribute('class', "html")
+    cssInput.setAttribute('class', "css")
+    jsInput.setAttribute('class', "javascript")
+    
+    function watch(){
+        hljs.highlightBlock(htmlInput);
+        hljs.highlightBlock(cssInput);
+        hljs.highlightBlock(jsInput);   
+    }
+    setInterval(watch, 1000);
+    
     resultFrame.style.height = resultContainer.offsetHeight+'px';
     resultFrame.style.width = resultContainer.offsetWidth+'px';
 

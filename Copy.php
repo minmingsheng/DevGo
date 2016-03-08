@@ -13,9 +13,6 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
         <title>Copy</title>
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
-
-
-
         <script src="js/createjs-2015.05.21.min.js"></script>
         <script src="js/zim_1.4.4.js"></script>
         <script src="js/copy.js"></script>
@@ -26,6 +23,7 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
     </head>
 
     <body>
+        <div class="insertPic"></div>
         <!--    header-->
         <div class="header copy_header">
             <nav></nav>
@@ -145,84 +143,52 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
 
             </section>
             <div id="upWireframes">
-                <section class="album">
+                <section class="album" id="albumG">
                     <div>
 
 
-                        <form method='POST' enctype='multipart/form-data' action='#'>
+                        <form method='POST' enctype='multipart/form-data' action='savePicture.php'>
                             <label for="pic">Choose a file</label>
                             <input type='file' name='picture' id='pic' />
-                            <input type='submit' value='Upload' />
+                            <input type='submit' id="uploadG" value='Upload' />
 
                         </form>
                         <!--================================================================================-->
-                        <?php
-if( isset($_FILES['picture']) ) {
-            
-        $file = $_FILES['picture'];
-		print_r( $file );
-            
-	} else {
-	// otherwise, display information about the uploaded file
 
-//		
-
-}
-?>
-
+    
                             <!--================================================================================-->
                     </div>
+                    <div id="tttt"></div>
                     <div></div>
                     <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+        
                 </section>
 
-                <section class="otherWireFrame">
+                <section class="otherWireFrame" id = "otherWireFrameA">
                     <div id="triangle_up" class="triangle"></div>
                 </section>
             </div>
             <div class="overflow">
                 <canvas id="canvasForWireframe"></canvas>
+                <button class="saveCanvas">save</button>
             </div>
             <div id="downWireframe" class=downWireframe>
-                <section class="otherWireFrame">
+                <section class="otherWireFrame" id = "otherWireFrameB">
                     <div id="triangle_down" class="triangle down"></div>
                 </section>
-                <section class="album">
+                <section class="album" id = "albumL" >
                     <div>
                         <form method='POST' enctype='multipart/form-data' action='#'>
                             <label for="pic">Choose a file</label>
                             <input type='file' name='picture' id='pic' />
-                            <input type='submit' value='Upload' />
+                            <input type='submit' id="uploadL" value='Upload' />
                         </form>
-                        <!--================================================================================-->
-                        <?php
-if( isset($_FILES['picture']) ) {
-            
-        $file = $_FILES['picture'];
-		print_r( $file );
-            
-	} else {
-	// otherwise, display information about the uploaded file
 
-//		
-
-}
-?>
                     </div>
+                    <div id="ttttt"></div>
                     <div></div>
                     <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+
                 </section>
             </div>
         </div>

@@ -14,9 +14,11 @@ if(!isset($_SESSION) || !isset($_SESSION['myusername'])){
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,300italic,400italic,600italic,700,700italic,800italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
-
-
+    <link rel="stylesheet" href="css/monokai-sublime.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script src="js/freecode.js"></script>
+
 
 </head>
 

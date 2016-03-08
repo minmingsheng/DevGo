@@ -371,8 +371,10 @@ window.addEventListener("load", function () {
     var triangle_down = document.getElementById("triangle_down");
     var triangle_up = document.getElementById("triangle_up");
     var upWireframes = document.getElementById("upWireframes");
+    var otherWireFrameA = document.getElementById("otherWireFrameA");
+    var otherWireFrameB = document.getElementById("otherWireFrameB");
     //    console.log(otherWireFrame);
-    upWireframes.addEventListener("click", function () {
+    otherWireFrameA.addEventListener("click", function () {
         if (upWireframes.offsetHeight > 340) {
 
             album0.style.height = 0 + "px";
@@ -387,7 +389,7 @@ window.addEventListener("load", function () {
     })
 
 
-    downWireframe.addEventListener("click", function () {
+    otherWireFrameB.addEventListener("click", function () {
         if (downWireframe.offsetHeight > 340) {
             album[1].style.height = 0 + "px";
             triangle_down.style.transform = "rotate(-45deg)";
